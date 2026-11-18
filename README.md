@@ -1,13 +1,10 @@
 # TestDPC COPE QR
 
+#### https://sanrax.github.io/testdpc-qr/
+
 A static, browser-local enrollment QR generator using the unmodified official
 TestDPC APK. Open it on a computer, tablet or another phone, and scan the QR
-from the phone you want to enroll. No MDM tenant, backend or APK build is needed.
-
-The page includes optional Wi-Fi credentials, PNG/SVG/JSON downloads, a local APK
-checksum calculator, and enrollment/removal instructions. All assets are bundled;
-there are no CDN scripts, analytics, API calls, saved settings or remote commands.
-The hosting provider can still log ordinary page visits.
+from the phone you want to enroll.
 
 ## Enroll
 
