@@ -1,0 +1,12 @@
+{
+  "name": "testdpc-cope-qr",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser-local TestDPC COPE enrollment QR generator",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "qr": "node scripts/generate.cjs"
+  },
+  "engines": { "node": ">=22" }
+}

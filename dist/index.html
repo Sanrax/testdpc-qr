@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generate a TestDPC QR code for work and personal setup, with optional Wi-Fi details.">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#1b1d25">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>TestDPC QR</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/qrcode.js" defer></script>
+  <script src="core.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1><img src="icon.svg" alt="" width="28" height="28">TestDPC QR</h1>
+    <a href="#guide">How to use</a>
+  </header>
+  <main>
+    <div class="workspace">
+        <p id="wifi-note" class="wifi-note">Wi-Fi settings below are optional. Only fill them out if you want to skip setting up Wi-Fi on the device. Otherwise, leave the toggle off.</p>
+        <section class="card settings" aria-label="QR settings">
+          <form id="settings-form" autocomplete="off">
+            <label class="toggle-row" for="include-wifi"><span>Include Wi-Fi details</span><input type="checkbox" id="include-wifi" role="switch" aria-controls="wifi-fields" aria-describedby="wifi-note" aria-expanded="false"></label>
+            <fieldset id="wifi-fields" hidden disabled>
+              <legend class="sr-only">Wi-Fi settings</legend>
+              <label for="ssid">Network name (SSID)</label>
+              <input id="ssid" type="text" placeholder="Your Wi-Fi network" autocapitalize="none" spellcheck="false">
+              <label for="security">Security</label>
+              <select id="security"><option value="WPA">WPA / WPA2 Personal</option><option value="NONE">Open network</option></select>
+              <div id="password-field"><label for="wifi-password">Wi-Fi password</label><input id="wifi-password" type="password" autocomplete="new-password" spellcheck="false"></div>
+              <label class="check-row"><input id="hidden-network" type="checkbox"> Hidden network</label>
+              <p class="hint">Anyone with this QR can read the Wi-Fi password.</p>
+            </fieldset>
+            <details class="advanced">
+              <summary>APK settings</summary>
+              <div class="advanced-content">
+                <p class="hint">TestDPC 9.0.12 is ready to use. Change these only if you’re using a different download.</p>
+                <label for="apk-url">APK download URL</label>
+                <input id="apk-url" type="url" spellcheck="false" autocapitalize="none">
+                <label for="checksum">APK SHA-256</label>
+                <textarea id="checksum" rows="3" spellcheck="false" autocapitalize="none" aria-describedby="checksum-help"></textarea>
+                <small id="checksum-help">Hex or URL-safe Base64 checksum of the complete APK.</small>
+                <label for="apk-file">Calculate from an APK</label>
+                <input id="apk-file" type="file" accept=".apk,application/vnd.android.package-archive">
+                <p id="hash-status" class="hint" role="status">The APK stays on your device.</p>
+                <button type="button" id="reset-apk" class="text-button">Reset to official release</button>
+              </div>
+            </details>
+            <p id="error" class="error" role="alert" hidden></p>
+            <button type="button" id="generate" class="button primary">Generate QR code</button>
+          </form>
+        </section>
+        <div class="mascot-perch" aria-hidden="true"><img class="ryuuko" src="assets/ryuuko-peek.png" alt="" width="1536" height="1024" fetchpriority="high"></div>
+        <section class="card result" aria-labelledby="qr-title">
+          <div class="result-heading"><h2 id="qr-title">QR code</h2><span id="qr-state" class="state">Preparing</span></div>
+          <div class="qr-stage"><div id="qr-image"></div><p id="qr-placeholder" hidden>Settings changed.<br>Generate a new QR code.</p></div>
+          <p id="qr-status" class="sr-only" role="status" aria-live="polite">Preparing your QR…</p>
+          <div class="download-row" aria-label="Download QR code"><button id="download-png" type="button" class="button secondary" disabled>PNG</button><button id="download-svg" type="button" class="button secondary" disabled>SVG</button><button id="download-json" type="button" class="button secondary" disabled>JSON</button></div>
+          <details class="payload-details"><summary>View QR data</summary><pre id="payload" tabindex="0"></pre><button id="copy-json" class="text-button" type="button" disabled>Copy JSON</button><p id="copy-status" class="hint" role="status"></p></details>
+        </section>
+    </div>
+
+    <section id="guide" class="instructions" aria-labelledby="guide-title">
+      <h2 id="guide-title">Setup and removal</h2>
+      <div class="instructions-content">
+        <ol>
+          <li>On a compatible Android 11+ phone’s initial welcome screen, tap six times to open the enrollment scanner. Scan this QR from another screen.</li>
+          <li>Connect to the internet, let TestDPC install, and choose <strong>“Use for work &amp; personal.”</strong> Finish setup.</li>
+          <li>Open the briefcase-badged TestDPC in the Work tab. Check that it says it is a <strong>profile owner of an organization-owned device</strong>.</li>
+          <li>To remove management, open <strong>work-profile TestDPC → Data wipe → Remove work profile</strong>. Leave the extra wipe options unchecked, then confirm. Work apps and data are deleted; personal data is kept.</li>
+        </ol>
+        <p class="removal-note"><strong>“Factory reset device” erases the phone.</strong> Choose “Remove work profile” to deprovision it.</p>
+      </div>
+    </section>
+  </main>
+  <footer><span>TestDPC QR</span><div><a href="https://github.com/googlesamples/android-testdpc" target="_blank" rel="noopener noreferrer">TestDPC</a><a href="THIRD_PARTY_NOTICES.txt">Licenses</a></div></footer>
+  <noscript><div class="noscript">Enable JavaScript to generate a QR code.</div></noscript>
+</body>
+</html>
